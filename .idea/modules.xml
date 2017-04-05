@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/MyApplication.iml" filepath="$PROJECT_DIR$/MyApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myasynctask/myasynctask.iml" filepath="$PROJECT_DIR$/myasynctask/myasynctask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybroadcast/mybroadcast.iml" filepath="$PROJECT_DIR$/mybroadcast/mybroadcast.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myfirebase/myfirebase.iml" filepath="$PROJECT_DIR$/myfirebase/myfirebase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myfirebaselist/myfirebaselist.iml" filepath="$PROJECT_DIR$/myfirebaselist/myfirebaselist.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myintentservice/myintentservice.iml" filepath="$PROJECT_DIR$/myintentservice/myintentservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mylistview/mylistview.iml" filepath="$PROJECT_DIR$/mylistview/mylistview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mynotification/mynotification.iml" filepath="$PROJECT_DIR$/mynotification/mynotification.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myportsip_test1/myportsip_test1.iml" filepath="$PROJECT_DIR$/myportsip_test1/myportsip_test1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mytablelayout/mytablelayout.iml" filepath="$PROJECT_DIR$/mytablelayout/mytablelayout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myviewflipper/myviewflipper.iml" filepath="$PROJECT_DIR$/myviewflipper/myviewflipper.iml" />
+    </modules>
+  </component>
+</project>
