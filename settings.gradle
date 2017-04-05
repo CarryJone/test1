@@ -1,0 +1,1 @@
+include ':app', ':myportsip_test1', ':myfirebase', ':mytablelayout', ':myviewflipper', ':mylistview', ':mynotification', ':myintentservice', ':mybroadcast', ':myasynctask', ':myfirebaselist'

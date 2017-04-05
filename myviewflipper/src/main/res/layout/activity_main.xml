@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.gao.bryan.myviewflipper.MainActivity"
+    android:weightSum="1">
+
+
+    <ViewFlipper
+        android:id="@+id/viewflipper"
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:layout_weight="0.95">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/ball" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/back" />
+
+    </ViewFlipper>
+
+    <Button
+        android:id="@+id/bu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+    <TextClock
+        android:id="@+id/textClock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.95"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+</LinearLayout>
