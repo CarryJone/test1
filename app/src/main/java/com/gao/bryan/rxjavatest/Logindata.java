@@ -62,6 +62,6 @@ public class Logindata {
 
     @Override
     public String toString() {
-        return accessToken+expiresTime;
+        return accessToken+","+expiresTime+","+employeeId+","+userName+","+departmentId+","+deptName;
     }
 }
