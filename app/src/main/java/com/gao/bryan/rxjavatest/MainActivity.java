@@ -4,11 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,13 +23,17 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG = MainActivity.class.getSimpleName();
     private Context c;
     private TextView textview;
+
+
+    WebView mWebView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         c = this;
         textview = (TextView) findViewById(R.id.textview);
-
+        mWebView = (WebView) findViewById(R.id.mWebView);
         Observer<ArrayList<String>> observer = new Observer<ArrayList<String>>() {
             @Override
             public void onCompleted() {
@@ -171,13 +173,7 @@ public class MainActivity extends AppCompatActivity {
           }
       });
 
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("acct","bryan");
-            jsonObject.put("pwd","sec@1234");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
 
         ApiServer.getInstance().logincation(new acct("bryan","sec@1234")).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).flatMap(new Func1<ResultData<Logindata>, Observable<ArrayList<Logindata>>>()
         {
@@ -210,6 +206,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        String url = "http://52.175.216.100/WebAPI/api/authentication";
+        acct aa = new acct("bryan","sec@1234");
+        String postData = "acct=bryan&pwd=sec@1234";
+        mWebView.postUrl(url,postData.toString().getBytes());
+
+
+
     }
     public Observable<String> o1(final String s){
 
@@ -224,6 +228,8 @@ public class MainActivity extends AppCompatActivity {
         return Observable.just(s);
 
     }
+
+
 
 
 
