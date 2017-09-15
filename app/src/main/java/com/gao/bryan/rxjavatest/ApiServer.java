@@ -8,8 +8,8 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -19,7 +19,8 @@ import rx.Observable;
 public class ApiServer {
 
     private final static String TAG = ApiServer.class.getSimpleName();
-    private final static String  API_SERVER_URL = "http://52.175.216.100/WebAPI/api/";
+//    private final static String  API_SERVER_URL = "http://52.175.216.100/WebAPI/api/";
+    private final static String  API_SERVER_URL = "http://192.168.1.220/WebApi/";
     private final SexApiService myApiServer;
     public static ApiServer service = new ApiServer();
 
@@ -36,17 +37,32 @@ public class ApiServer {
 
     private interface SexApiService
     {
-        @POST("authentication")
-        Observable<ResultData<Logindata>> login(
-                @Body acct a);
+        @POST("getUserWebList.ashx")
+        Observable<ResultWebdata<webdata>> getweblist(
+                @Query("Acc")
+                        String account);
 
 
     }
 
-    public Observable<ResultData<Logindata>> logincation(acct a)
+    public Observable<ResultWebdata<webdata>> getweblist(String a)
     {
         Log.d(TAG, "logincation: "+a.toString());
-        return myApiServer.login(a);
+        return myApiServer.getweblist(a);
     }
+//    private interface SexApiService
+//    {
+//        @POST("authentication")
+//        Observable<ResultData<Logindata>> login(
+//                @Body acct a);
+//
+//
+//    }
+//
+//    public Observable<ResultData<Logindata>> logincation(acct a)
+//    {
+//        Log.d(TAG, "logincation: "+a.toString());
+//        return myApiServer.login(a);
+//    }
 
 }

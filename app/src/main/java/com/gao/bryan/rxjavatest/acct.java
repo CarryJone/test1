@@ -5,12 +5,11 @@ package com.gao.bryan.rxjavatest;
  */
 
 public class acct {
-    private String acct;
-    private String pwd;
+    private String acc;
 
-    public acct(String acct, String pwd) {
-        this.acct = acct;
-        this.pwd = pwd;
+
+    public acct(String acct) {
+        this.acc = acct;
     }
 
 

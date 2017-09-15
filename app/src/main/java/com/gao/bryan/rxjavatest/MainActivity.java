@@ -5,11 +5,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Observer;
@@ -23,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG = MainActivity.class.getSimpleName();
     private Context c;
     private TextView textview;
-
+    private ImageView imageView;
 
     WebView mWebView;
 
@@ -34,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         c = this;
         textview = (TextView) findViewById(R.id.textview);
         mWebView = (WebView) findViewById(R.id.mWebView);
+        imageView = (ImageView) findViewById(R.id.imageView);
+        Picasso.with(c).load("http://i.imgur.com/DvpvklR.png").into(imageView);
         Observer<ArrayList<String>> observer = new Observer<ArrayList<String>>() {
             @Override
             public void onCompleted() {
@@ -53,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
+        new RunWork().start();
 
         ArrayList<String> list = new ArrayList<>();
         list.add("Hi");
@@ -158,37 +169,72 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-      o1("123").subscribeOn(Schedulers.newThread())
+      o1("1234").subscribeOn(Schedulers.newThread())
               .map(new Func1<String, String>() {
                   @Override
                   public String call(String s) {
-                      return  s+s+s;
+                      return  s;
                   }
               })
               .observeOn(Schedulers.newThread())
             .subscribe(new Action1<String>() {
           @Override
           public void call(String s) {
-            textview.setText(s);
+              Log.d(TAG, "call: dataStructure: "+s);
+              textview.setText(s);
           }
       });
 
 
 
-        ApiServer.getInstance().logincation(new acct("bryan","sec@1234")).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).flatMap(new Func1<ResultData<Logindata>, Observable<ArrayList<Logindata>>>()
-        {
+
+//
+//        ApiServer.getInstance().logincation(new acct("bryan","sec@1234")).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).flatMap(new Func1<ResultData<Logindata>, Observable<ArrayList<Logindata>>>()
+//        {
+//            @Override
+//            public Observable<ArrayList<Logindata>> call(ResultData<Logindata> logindataResultData) {
+//                Log.d(TAG, "call: "+logindataResultData.getResult());
+//                if (logindataResultData.getResult().equals("1"))
+//                {
+//                    return Observable.just(logindataResultData.getData());
+//                } else
+//                {
+//                    return Observable.error(new Exception(logindataResultData.getMessage()));
+//                }
+//            }
+//        }).subscribe(new Observer<ArrayList<Logindata>>() {
+//            @Override
+//            public void onCompleted() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(ArrayList<Logindata> logindatas) {
+//                for (Logindata data : logindatas)
+//                    Log.d(TAG, "onNext: " + data);
+//
+//            }
+//        });
+
+
+        ApiServer.getInstance().getweblist("1234").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).flatMap(new Func1<ResultWebdata<webdata>, Observable<ArrayList<webdata>>>() {
             @Override
-            public Observable<ArrayList<Logindata>> call(ResultData<Logindata> logindataResultData) {
-                Log.d(TAG, "call: "+logindataResultData.getResult());
-                if (logindataResultData.getResult().equals("1"))
+            public Observable<ArrayList<webdata>> call(ResultWebdata<webdata> webdataResultWebdata) {
+                if (webdataResultWebdata.getResult().equals("1"))
                 {
-                    return Observable.just(logindataResultData.getData());
-                } else
+                    return Observable.just(webdataResultWebdata.getData());
+                }else
                 {
-                    return Observable.error(new Exception(logindataResultData.getMessage()));
+                    Log.d(TAG, "call: "+webdataResultWebdata.getMSG());
+                    return Observable.error(new Exception(webdataResultWebdata.getMSG()));
                 }
             }
-        }).subscribe(new Observer<ArrayList<Logindata>>() {
+        }).subscribe(new Observer<ArrayList<webdata>>() {
             @Override
             public void onCompleted() {
 
@@ -200,18 +246,22 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNext(ArrayList<Logindata> logindatas) {
-                for (Logindata data : logindatas)
-                    Log.d(TAG, "onNext: " + data);
-
+            public void onNext(ArrayList<webdata> webdatas) {
+                for (webdata data : webdatas){
+                    Log.d(TAG, "onNext: "+data.getWebname());
+                }
             }
         });
 
         String url = "http://52.175.216.100/WebAPI/api/authentication";
-        acct aa = new acct("bryan","sec@1234");
-        String postData = "acct=bryan&pwd=sec@1234";
-        mWebView.postUrl(url,postData.toString().getBytes());
+        String ss = SHA256.shaEncrypt("1234");
+        Log.d(TAG, "dataStructure: "+ss);
+        String postData = "key=1234&value="+ss;
+        mWebView.setWebViewClient(new WebViewClient());
+//        mWebView.postUrl(url,postData.toString().getBytes());
+        mWebView.postUrl("http://192.168.1.220/Demo/",postData.toString().getBytes());
 
+//        mWebView.loadUrl("https://www.google.com.tw");
 
 
     }
@@ -228,11 +278,34 @@ public class MainActivity extends AppCompatActivity {
         return Observable.just(s);
 
     }
+    class RunWork extends Thread{
+        Response response;
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "run: "+123);
+                String data = response.body().toString();
+                Log.d(TAG, "run: "+data);
+            }
+        };
+        public void run(){
+            OkHttpClient okHttpClient = new OkHttpClient();
+            okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
+            okHttpClient.setReadTimeout(30, TimeUnit.SECONDS);
 
+            Request request = new Request.Builder()
+                    .url("https://blockchain.info/tobtc?currency=USD&value=500")
+                    .build();
 
+            try {
+                response = okHttpClient.newCall(request).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            runOnUiThread(r);
 
-
-
+        }
+    }
 
 }
 class Studen {

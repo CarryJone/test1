@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Mytest</string>
+    <string-array name="image_data">
+        <item>"棒球"</item>
+        <item>"足球"</item>
+        <item>"藍球"</item>
+        <item>"鉛球"</item>
+        <item>"棒球"</item>
+    </string-array>
+    <string-array name="right_text">
+        <item>密碼服務</item>
+        <item>個人設定</item>
+        <item>問卷調查</item>
+        <item>聯絡我們</item>
+        <item>操作說明</item>
+        <item>連結臉書</item>
+        <item>告知事項</item>
+    </string-array>
+</resources>
